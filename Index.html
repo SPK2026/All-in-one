@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FL Chat - Supervisors All in One</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#0284c7',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .dark .glass-nav {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.4);
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-300 pb-12">
+
+    <!-- Header Navbar -->
+    <nav class="sticky top-0 z-40 glass-nav border-b border-slate-200 dark:border-slate-800 transition-colors">
+        <div class="max-w-7xl mx-mx auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand Title -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
+                        <i class="fa-solid fa-headset text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg leading-tight bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 dark:from-cyan-400 dark:via-sky-300 dark:to-indigo-300 bg-clip-text text-transparent">
+                            FL Chat - Supervisors
+                        </h1>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">All in One Operations Hub</p>
+                    </div>
+                </div>
+
+                <!-- Right Tools: Quick Calculators & Theme Toggle -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <button onclick="openModal('quickCalcModal')" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg bg-sky-50 dark:bg-slate-800 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-slate-700 hover:bg-sky-100 dark:hover:bg-slate-700 transition flex items-center gap-2">
+                        <i class="fa-solid fa-calculator text-sky-500"></i>
+                        <span class="hidden sm:inline">Quick Tools</span>
+                    </button>
+                    
+                    <button id="themeToggleBtn" onclick="toggleTheme()" class="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition flex items-center justify-center border border-slate-200 dark:border-slate-700" title="Toggle Theme">
+                        <i id="themeIcon" class="fa-solid fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+
+        <!-- Summary Stats Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="glass-card p-4 rounded-2xl shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl shrink-0">
+                    <i class="fa-solid fa-cubes"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Total Resources</span>
+                    <h3 id="statTotal" class="text-2xl font-bold">19</h3>
+                </div>
+            </div>
+            <div class="glass-card p-4 rounded-2xl shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl shrink-0">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Trackers</span>
+                    <h3 id="statTrackers" class="text-2xl font-bold">7</h3>
+                </div>
+            </div>
+            <div class="glass-card p-4 rounded-2xl shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl shrink-0">
+                    <i class="fa-solid fa-list-check"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Validations</span>
+                    <h3 id="statValidations" class="text-2xl font-bold">4</h3>
+                </div>
+            </div>
+            <div class="glass-card p-4 rounded-2xl shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl shrink-0">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Favorites</span>
+                    <h3 id="statFavorites" class="text-2xl font-bold">0</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters, Search & Categories -->
+        <div class="glass-card p-4 sm:p-5 rounded-2xl shadow-sm space-y-4">
+            <!-- Search Bar -->
+            <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input type="text" id="searchInput" oninput="filterTools()" placeholder="Search tools, trackers, forms, calculators or tags..." class="w-full pl-11 pr-10 py-3 bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700/80 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm transition placeholder-slate-400">
+                <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar text-xs sm:text-sm">
+                <button onclick="setCategory('all')" id="tab-all" class="category-tab px-4 py-2 rounded-xl font-medium transition whitespace-nowrap bg-sky-600 text-white shadow-md shadow-sky-600/20">
+                    <i class="fa-solid fa-border-all mr-1.5"></i> All Tools
+                </button>
+                <button onclick="setCategory('favorites')" id="tab-favorites" class="category-tab px-4 py-2 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap">
+                    <i class="fa-solid fa-star text-amber-500 mr-1.5"></i> Favorites
+                </button>
+                <button onclick="setCategory('Trackers')" id="tab-Trackers" class="category-tab px-4 py-2 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap">
+                    <i class="fa-solid fa-chart-pie text-emerald-500 mr-1.5"></i> Trackers
+                </button>
+                <button onclick="setCategory('Validations')" id="tab-Validations" class="category-tab px-4 py-2 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap">
+                    <i class="fa-solid fa-shield-halved text-purple-500 mr-1.5"></i> Validations & Ops
+                </button>
+                <button onclick="setCategory('Forms')" id="tab-Forms" class="category-tab px-4 py-2 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap">
+                    <i class="fa-solid fa-calculator text-sky-500 mr-1.5"></i> Forms & Calculators
+                </button>
+            </div>
+        </div>
+
+        <!-- Tool Cards Grid -->
+        <div id="toolsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <!-- Cards will be populated dynamically -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-16 glass-card rounded-2xl">
+            <div class="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 flex items-center justify-center text-2xl mx-auto mb-3">
+                <i class="fa-solid fa-folder-open"></i>
+            </div>
+            <h3 class="text-base font-semibold text-slate-700 dark:text-slate-200">No matching tools found</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto mt-1">Try adjusting your search terms or filter selection.</p>
+        </div>
+    </main>
+
+    <!-- Embedded Quick Calculator Modal -->
+    <div id="quickCalcModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-card bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto custom-scrollbar shadow-2xl p-6 relative">
+            
+            <button onclick="closeModal('quickCalcModal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h2 class="text-xl font-bold flex items-center gap-2 mb-4">
+                <i class="fa-solid fa-calculator text-sky-500"></i> Operational Quick Calculators
+            </h2>
+
+            <div class="space-y-6">
+                <!-- OT Calculator Widget -->
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 space-y-3">
+                    <h3 class="font-semibold text-sm flex items-center justify-between">
+                        <span><i class="fa-solid fa-clock text-amber-500 mr-2"></i>OT Estimator (Sept Scheme)</span>
+                        <a href="https://spk2026.github.io/OT-Calculator/" target="_blank" class="text-xs text-sky-500 hover:underline">Full Tool <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3 text-xs">
+                        <div>
+                            <label class="block text-slate-500 dark:text-slate-400 mb-1">OT Hours Worked</label>
+                            <input type="number" id="otHours" oninput="calcOT()" value="4" class="w-full p-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-slate-500 dark:text-slate-400 mb-1">Hourly Rate (₹)</label>
+                            <input type="number" id="otRate" oninput="calcOT()" value="150" class="w-full p-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-slate-200 dark:border-slate-700 flex justify-between items-center text-sm font-semibold">
+                        <span>Est. OT Compensation:</span>
+                        <span id="otResult" class="text-emerald-600 dark:text-emerald-400 font-bold text-base">₹ 900.00</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400">Calculated at 1.5x standard hourly multiplier.</p>
+                </div>
+
+                <!-- RL Penalty Quick Calc Widget -->
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 space-y-3">
+                    <h3 class="font-semibold text-sm flex items-center justify-between">
+                        <span><i class="fa-solid fa-triangle-exclamation text-rose-500 mr-2"></i>RL Penalty Calculator</span>
+                        <a href="https://spk2026.github.io/RL-penalty-calculator/" target="_blank" class="text-xs text-sky-500 hover:underline">Full Tool <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>
+                    </h3>
+                    <div class="space-y-3 text-xs">
+                        <div>
+                            <label class="block text-slate-500 dark:text-slate-400 mb-1">Unplanned Absence Count (This Month)</label>
+                            <select id="rlOccurrences" onchange="calcRL()" class="w-full p-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg outline-none">
+                                <option value="0">0 Absences (0% Penalty)</option>
+                                <option value="1">1 Absence (Warning / 10% Incentive Loss)</option>
+                                <option value="2">2 Absences (25% Incentive Loss)</option>
+                                <option value="3">3+ Absences (50% - 100% Incentive Loss)</option>
+                            </select>
+                        </div>
+                        <div class="p-3 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800">
+                            <div class="text-xs text-slate-500">Impact Assessment:</div>
+                            <div id="rlImpact" class="font-medium text-emerald-600 dark:text-emerald-400 mt-0.5">Compliant - Full Incentive Eligible</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 text-sm font-medium border border-slate-700 dark:border-slate-200">
+        <i class="fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600 text-base"></i>
+        <span id="toastMessage">Link copied to clipboard!</span>
+    </div>
+
+    <script>
+        // Data Structure Parsed from Supervisor Excel Sheet
+        const toolsData = [
+            // TRACKERS
+            {
+                id: "1",
+                title: "Survey Analysis Tracker",
+                category: "Trackers",
+                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u124662_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7B8e4a77aa-971d-446c-b105-b23690c0d0fe%7D&action=edit&wdprevioussession=196a5320-f156-0226-c5f3-74d6ba9fa6f5&wdenableroaming=1&wdodb=1&wdlcid=en-US&wdorigin=Other&wdredirectionreason=Force_SingleStepBoot&wdinitialsession=6e970d67-51a3-3f00-de6d-2cd1571831f9&wdrldsc=2&wdrldc=1&wdrldr=ContinueInExcel",
+                icon: "fa-chart-column",
+                iconColor: "text-blue-500 bg-blue-500/10",
+                tags: ["SharePoint", "Excel", "Survey"],
+                desc: "Live CSAT/DSAT survey analysis & feedback logs."
+            },
+            {
+                id: "2",
+                title: "Monthly DAP - TGT/RL",
+                category: "Trackers",
+                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u433597_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7BAD5FF90F-529F-40C7-8A85-F8976EB57CD6%7D&file=InfoSec%20Training%20Report%20as%20of%2030.09.25%20(ETI).xlsb&action=default&mobileredirect=true&DefaultItemOpen=1",
+                icon: "fa-calendar-days",
+                iconColor: "text-amber-500 bg-amber-500/10",
+                tags: ["Monthly DAP", "TGT", "InfoSec"],
+                desc: "InfoSec and monthly DAP compliance reporting."
+            },
+            {
+                id: "3",
+                title: "TGT Feedback checks (Read only)",
+                category: "Trackers",
+                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u124662_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7BADAD180D-A977-4AEE-B9FF-121D2F887B4C%7D&file=Support%20Placement%20-%20Analysis%20-%20FL%20Chat.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1",
+                icon: "fa-clipboard-check",
+                iconColor: "text-purple-500 bg-purple-500/10",
+                tags: ["Read Only", "Feedback", "TGT"],
+                desc: "Audited feedback and quality audit history."
+            },
+            {
+                id: "4",
+                title: "15 Mins report (Read only)",
+                category: "Trackers",
+                url: "https://wnsgs.sharepoint.com/:x:/r/sites/EtraveliFamily/_layouts/15/Doc.aspx?sourcedoc=%7B9F5CA254-DD07-4E59-81F8-FA131259DF25%7D&file=ID%20status%20-%20Etraveli.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1",
+                icon: "fa-stopwatch",
+                iconColor: "text-rose-500 bg-rose-500/10",
+                tags: ["Read Only", "Realtime", "Etraveli"],
+                desc: "Quarter-hourly queue & headcount status monitor."
+            },
+            {
+                id: "5",
+                title: "HR Connect tracker",
+                category: "Trackers",
+                url: "https://forms.office.com/r/rtwvD7j76x",
+                icon: "fa-users-gear",
+                iconColor: "text-cyan-500 bg-cyan-500/10",
+                tags: ["HR", "Form", "Connect"],
+                desc: "HR queries, escalations, and grievance tracking."
+            },
+            {
+                id: "6",
+                title: "WNS Mandatory trainings",
+                category: "Trackers",
+                url: "https://forms.office.com/r/zdY7HMQgHa",
+                icon: "fa-graduation-cap",
+                iconColor: "text-emerald-500 bg-emerald-500/10",
+                tags: ["Training", "Compliance", "Form"],
+                desc: "Mandatory compliance module submission tracker."
+            },
+            {
+                id: "7",
+                title: "Client ID statuses",
+                category: "Trackers",
+                url: "https://wnsgs.sharepoint.com/:x:/r/sites/EtraveliFamily/_layouts/15/Doc.aspx?sourcedoc=%7B9F5CA254-DD07-4E59-81F8-FA131259DF25%7D&file=ID%20status%20-%20Etraveli.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1",
+                icon: "fa-id-card",
+                iconColor: "text-indigo-500 bg-indigo-500/10",
+                tags: ["Client ID", "Etraveli", "Access"],
+                desc: "Client system ID creation & active status roster."
+            },
+
+            // VALIDATIONS & OPERATIONS
+            {
+                id: "8",
+                title: "Transfers Validation",
+                category: "Validations",
+                url: "https://forms.office.com/r/YxaG4st5Zr",
+                icon: "fa-right-left",
+                iconColor: "text-blue-500 bg-blue-500/10",
+                tags: ["Transfers", "Validation", "MS Form"],
+                desc: "Validate chat and ticket transfers compliance."
+            },
+            {
+                id: "9",
+                title: "Support Validation",
+                category: "Validations",
+                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u124662_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7BADAD180D-A977-4AEE-B9FF-121D2F887B4C%7D&file=Support%20Placement%20-%20Analysis%20-%20FL%20Chat.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1",
+                icon: "fa-circle-check",
+                iconColor: "text-emerald-500 bg-emerald-500/10",
+                tags: ["Support", "FL Chat", "Analysis"],
+                desc: "Support placement and roster allocation validation."
+            },
+            {
+                id: "10",
+                title: "WC2 View entries",
+                category: "Validations",
+                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u124662_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7B68812298-93D5-4707-831B-5A673A3EF551%7D&file=WC2%20Implementation%20form%20_To%20be%20filled%20on%20chat_call%20itself..xlsx&action=edit&mobileredirect=true&wdMsFormsCorrelationId=3c5af38c-8513-4a65-a1c4-43be5ebe29e1",
+                icon: "fa-file-invoice",
+                iconColor: "text-violet-500 bg-violet-500/10",
+                tags: ["WC2", "Implementation", "Live Chat"],
+                desc: "WC2 live call/chat implementation entries view."
+            },
+            {
+                id: "11",
+                title: "DSAT Calibration tracker",
+                category: "Validations",
+                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u124662_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7B0E8FBEBE-6313-4554-B071-7E356C12ACAA%7D&file=DSAT%20Calibrations%20Tracker.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1&wdwpf=t",
+                icon: "fa-sliders",
+                iconColor: "text-amber-500 bg-amber-500/10",
+                tags: ["DSAT", "Calibration", "Quality"],
+                desc: "DSAT case calibrations & quality alignment logger."
+            },
+
+            // FORMS & CALCULATORS
+            {
+                id: "12",
+                title: "Coaching Form",
+                category: "Forms",
+                url: "https://forms.office.com/r/rtwvD7j76x",
+                icon: "fa-bullseye",
+                iconColor: "text-rose-500 bg-rose-500/10",
+                tags: ["Coaching", "1-on-1", "Form"],
+                desc: "Submit agent 1-on-1 coaching sessions and action plans."
+            },
+            {
+                id: "13",
+                title: "TGT/FL Feedback form",
+                category: "Forms",
+                url: "https://forms.office.com/r/YxaG4st5Zr",
+                icon: "fa-comments",
+                iconColor: "text-sky-500 bg-sky-500/10",
+                tags: ["Feedback", "TGT", "FL"],
+                desc: "Provide operational feedback for floor support."
+            },
+            {
+                id: "14",
+                title: "Client ID Deletion / retention form",
+                category: "Forms",
+                url: "https://forms.cloud.microsoft/pages/responsepage.aspx?id=--z4I5BqwkaWyko2JyG4LCMEzK2PWS5Nkrdk5Lu5I2VUQjJRNjlIS0ZCUk5RTDNQN1dQNjlVRkY2Ry4u&route=shorturl",
+                icon: "fa-user-slash",
+                iconColor: "text-red-500 bg-red-500/10",
+                tags: ["Client ID", "Deletion", "Offboarding"],
+                desc: "Request client credential deletion or retention extension."
+            },
+            {
+                id: "15",
+                title: "Attendance Correction form",
+                category: "Forms",
+                url: "https://forms.office.com/r/zdY7HMQgHa",
+                icon: "fa-user-clock",
+                iconColor: "text-indigo-500 bg-indigo-500/10",
+                tags: ["Attendance", "Correction", "Roster"],
+                desc: "Submit regularization requests for shift punch timings."
+            },
+            {
+                id: "16",
+                title: "Realtime Validation tracker",
+                category: "Forms",
+                url: "https://forms.cloud.microsoft/pages/responsepage.aspx?id=--z4I5BqwkaWyko2JyG4LCJePT65qNVGkW_cR9wuNrNURTFQNERTWFJGTktLM003UEFVSExKSVhGUy4u&route=shorturl",
+                icon: "fa-bolt",
+                iconColor: "text-amber-500 bg-amber-500/10",
+                tags: ["Realtime", "Validation", "Live Ops"],
+                desc: "Log real-time validation audits during shift."
+            },
+            {
+                id: "17",
+                title: "OT Calculator (Sept Scheme)",
+                category: "Forms",
+                url: "https://spk2026.github.io/OT-Calculator/",
+                icon: "fa-calculator",
+                iconColor: "text-emerald-500 bg-emerald-500/10",
+                tags: ["Calculator", "Overtime", "Pay Scheme"],
+                desc: "Official overtime pay calculator tool."
+            },
+            {
+                id: "18",
+                title: "RL Penalty Calculator",
+                category: "Forms",
+                url: "https://spk2026.github.io/RL-penalty-calculator/",
+                icon: "fa-triangle-exclamation",
+                iconColor: "text-orange-500 bg-orange-500/10",
+                tags: ["Calculator", "RL Penalty", "Absence"],
+                desc: "Calculate reliability penalty and incentive impact."
+            },
+            {
+                id: "19",
+                title: "One On One Template",
+                category: "Forms",
+                url: "https://spk2026.github.io/One-on-one-template-/",
+                icon: "fa-users-line",
+                iconColor: "text-teal-500 bg-teal-500/10",
+                tags: ["Template", "1-on-1", "Supervisor"],
+                desc: "Standard template generator for team 1-on-1 chats."
+            }
+        ];
+
+        // State variables
+        let currentCategory = 'all';
+        let searchQuery = '';
+        let favorites = JSON.parse(localStorage.getItem('fl_favs') || '[]');
+
+        // Theme Toggler
+        function initTheme() {
+            if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('themeIcon').className = 'fa-solid fa-sun text-amber-500';
+            } else {
+                document.documentElement.classList.add('dark');
+                document.getElementById('themeIcon').className = 'fa-solid fa-moon text-sky-400';
+            }
+        }
+
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+                document.getElementById('themeIcon').className = 'fa-solid fa-sun text-amber-500';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+                document.getElementById('themeIcon').className = 'fa-solid fa-moon text-sky-400';
+            }
+        }
+
+        // Toggle Favorites
+        function toggleFavorite(id, event) {
+            event.stopPropagation();
+            if (favorites.includes(id)) {
+                favorites = favorites.filter(favId => favId !== id);
+            } else {
+                favorites.push(id);
+            }
+            localStorage.setItem('fl_favs', JSON.stringify(favorites));
+            updateStats();
+            renderTools();
+        }
+
+        // Copy Link Functionality
+        function copyLink(url, event) {
+            event.stopPropagation();
+            
+            // Clipboard copy fallbacks
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(url);
+            } else {
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            }
+
+            showToast('Direct tool link copied to clipboard!');
+        }
+
+        // Show Toast
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Filter & Search
+        function setCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.className = "category-tab px-4 py-2 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap";
+            });
+
+            const activeTab = document.getElementById(`tab-${cat}`);
+            if (activeTab) {
+                activeTab.className = "category-tab px-4 py-2 rounded-xl font-medium transition whitespace-nowrap bg-sky-600 text-white shadow-md shadow-sky-600/20";
+            }
+            renderTools();
+        }
+
+        function filterTools() {
+            const input = document.getElementById('searchInput');
+            searchQuery = input.value.toLowerCase().trim();
+            document.getElementById('clearSearchBtn').classList.toggle('hidden', searchQuery === '');
+            renderTools();
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            filterTools();
+        }
+
+        // Update Counter Stats
+        function updateStats() {
+            document.getElementById('statTotal').innerText = toolsData.length;
+            document.getElementById('statTrackers').innerText = toolsData.filter(t => t.category === 'Trackers').length;
+            document.getElementById('statValidations').innerText = toolsData.filter(t => t.category === 'Validations').length;
+            document.getElementById('statFavorites').innerText = favorites.length;
+        }
+
+        // Render Tool Cards
+        function renderTools() {
+            const grid = document.getElementById('toolsGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            const filtered = toolsData.filter(tool => {
+                const matchesCategory = 
+                    currentCategory === 'all' ? true :
+                    currentCategory === 'favorites' ? favorites.includes(tool.id) :
+                    tool.category === currentCategory;
+
+                const matchesSearch = 
+                    tool.title.toLowerCase().includes(searchQuery) ||
+                    tool.desc.toLowerCase().includes(searchQuery) ||
+                    tool.tags.some(tag => tag.toLowerCase().includes(searchQuery));
+
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            grid.innerHTML = filtered.map(tool => {
+                const isFav = favorites.includes(tool.id);
+                return `
+                    <div class="glass-card rounded-2xl p-5 hover:shadow-lg transition-all duration-300 flex flex-col justify-between group border border-slate-200/80 dark:border-slate-800">
+                        <div>
+                            <!-- Top row: Icon & Actions -->
+                            <div class="flex items-start justify-between gap-3 mb-3">
+                                <div class="w-12 h-12 rounded-xl ${tool.iconColor} flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform">
+                                    <i class="fa-solid ${tool.icon}"></i>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <button onclick="copyLink('${tool.url}', event)" title="Copy Link" class="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center justify-center">
+                                        <i class="fa-regular fa-copy"></i>
+                                    </button>
+                                    <button onclick="toggleFavorite('${tool.id}', event)" title="${isFav ? 'Remove Favorite' : 'Add Favorite'}" class="w-8 h-8 rounded-lg transition flex items-center justify-center ${isFav ? 'text-amber-500 bg-amber-500/10' : 'text-slate-400 hover:text-amber-500 hover:bg-slate-100 dark:hover:bg-slate-800'}">
+                                        <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-star"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Title & Desc -->
+                            <h3 class="font-bold text-base text-slate-800 dark:text-slate-100 mb-1 group-hover:text-sky-500 transition-colors">
+                                ${tool.title}
+                            </h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">
+                                ${tool.desc}
+                            </p>
+                        </div>
+
+                        <div>
+                            <!-- Tags -->
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                ${tool.tags.map(tag => `
+                                    <span class="px-2 py-0.5 text-[10px] font-medium rounded-md bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300">
+                                        ${tag}
+                                    </span>
+                                `).join('')}
+                            </div>
+
+                            <!-- Open Action -->
+                            <a href="${tool.url}" target="_blank" class="w-full py-2.5 px-4 rounded-xl bg-slate-900 text-white dark:bg-sky-600 dark:hover:bg-sky-500 hover:bg-slate-800 font-medium text-xs flex items-center justify-center gap-2 transition shadow-sm">
+                                <span>Open Resource</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Modal Controls
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        // Embedded OT Quick Calculator Logic
+        function calcOT() {
+            const hours = parseFloat(document.getElementById('otHours').value) || 0;
+            const rate = parseFloat(document.getElementById('otRate').value) || 0;
+            const total = hours * rate * 1.5;
+            document.getElementById('otResult').innerText = `₹ ${total.toFixed(2)}`;
+        }
+
+        // Embedded RL Penalty Quick Calc Logic
+        function calcRL() {
+            const val = document.getElementById('rlOccurrences').value;
+            const impactEl = document.getElementById('rlImpact');
+            
+            if (val === "0") {
+                impactEl.innerText = "Compliant - Full Incentive Eligible";
+                impactEl.className = "font-medium text-emerald-600 dark:text-emerald-400 mt-0.5";
+            } else if (val === "1") {
+                impactEl.innerText = "Minor Warning - 10% Incentive Deducted";
+                impactEl.className = "font-medium text-amber-600 dark:text-amber-400 mt-0.5";
+            } else if (val === "2") {
+                impactEl.innerText = "Moderate Penalty - 25% Incentive Deducted";
+                impactEl.className = "font-medium text-orange-600 dark:text-orange-400 mt-0.5";
+            } else {
+                impactEl.innerText = "Severe Non-Compliance - 50% to 100% Incentive Loss";
+                impactEl.className = "font-medium text-rose-600 dark:text-rose-400 mt-0.5";
+            }
+        }
+
+        // Initial Initialization
+        window.onload = function() {
+            initTheme();
+            updateStats();
+            renderTools();
+        };
+    </script>
+</body>
+</html>
