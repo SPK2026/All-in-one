@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FL Chat - Supervisors All in One</title>
+    <title>FL Chat - Supervisors All in One Portal</title>
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -13,578 +14,512 @@
                 extend: {
                     colors: {
                         brand: {
-                            50: '#f0f7ff',
-                            100: '#e0effe',
-                            500: '#0284c7',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            800: '#075985',
-                            900: '#0c4a6e',
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
                         }
                     }
                 }
             }
         }
     </script>
+
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts Inter -->
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.75);
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
         }
-        .dark .glass-card {
-            background: rgba(30, 41, 59, 0.7);
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.75);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-        .dark .glass-nav {
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
+        ::-webkit-scrollbar-track {
             background: transparent;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
+        ::-webkit-scrollbar-thumb {
             background: rgba(156, 163, 175, 0.4);
-            border-radius: 9999px;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.7);
         }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-300 pb-12">
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
 
-    <!-- Header Navbar -->
-    <nav class="sticky top-0 z-40 glass-nav border-b border-slate-200 dark:border-slate-800 transition-colors">
-        <div class="max-w-7xl mx-mx auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <!-- Brand Title -->
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
-                        <i class="fa-solid fa-headset text-lg"></i>
-                    </div>
-                    <div>
-                        <h1 class="font-bold text-lg leading-tight bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 dark:from-cyan-400 dark:via-sky-300 dark:to-indigo-300 bg-clip-text text-transparent">
-                            FL Chat - Supervisors
-                        </h1>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">All in One Operations Hub</p>
-                    </div>
-                </div>
-
-                <!-- Right Tools: Quick Calculators & Theme Toggle -->
-                <div class="flex items-center gap-2 sm:gap-3">
-                    <button onclick="openModal('quickCalcModal')" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg bg-sky-50 dark:bg-slate-800 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-slate-700 hover:bg-sky-100 dark:hover:bg-slate-700 transition flex items-center gap-2">
-                        <i class="fa-solid fa-calculator text-sky-500"></i>
-                        <span class="hidden sm:inline">Quick Tools</span>
-                    </button>
-                    
-                    <button id="themeToggleBtn" onclick="toggleTheme()" class="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition flex items-center justify-center border border-slate-200 dark:border-slate-700" title="Toggle Theme">
-                        <i id="themeIcon" class="fa-solid fa-moon"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
-
-        <!-- Summary Stats Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="glass-card p-4 rounded-2xl shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl shrink-0">
-                    <i class="fa-solid fa-cubes"></i>
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-30 glass border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Brand / Title -->
+            <div class="flex items-center space-x-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20">
+                    <i class="fa-solid fa-[#0000] fa-headset text-xl"></i>
                 </div>
                 <div>
-                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Total Resources</span>
-                    <h3 id="statTotal" class="text-2xl font-bold">19</h3>
+                    <h1 class="text-xl sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400">
+                        FL Chat Portal
+                    </h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Supervisors All-In-One Toolkit</p>
                 </div>
             </div>
-            <div class="glass-card p-4 rounded-2xl shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl shrink-0">
+
+            <!-- Controls (Search, Theme, Tools) -->
+            <div class="flex items-center space-x-3">
+                <!-- Theme Toggle Button -->
+                <button id="themeToggleBtn" onclick="toggleTheme()" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-300 dark:hover:border-indigo-500 transition-all shadow-sm">
+                    <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+        <!-- Top Overview Stats Banner -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center space-x-4">
+                <div class="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xl shrink-0">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold" id="statTotal">0</div>
+                    <div class="text-xs text-slate-500 dark:text-slate-400">Total Resources</div>
+                </div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center space-x-4">
+                <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl shrink-0">
                     <i class="fa-solid fa-chart-line"></i>
                 </div>
                 <div>
-                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Trackers</span>
-                    <h3 id="statTrackers" class="text-2xl font-bold">7</h3>
+                    <div class="text-2xl font-bold" id="statTrackers">0</div>
+                    <div class="text-xs text-slate-500 dark:text-slate-400">Trackers</div>
                 </div>
             </div>
-            <div class="glass-card p-4 rounded-2xl shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl shrink-0">
+
+            <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center space-x-4">
+                <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl shrink-0">
                     <i class="fa-solid fa-list-check"></i>
                 </div>
                 <div>
-                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Validations</span>
-                    <h3 id="statValidations" class="text-2xl font-bold">4</h3>
+                    <div class="text-2xl font-bold" id="statValidations">0</div>
+                    <div class="text-xs text-slate-500 dark:text-slate-400">Validations</div>
                 </div>
             </div>
-            <div class="glass-card p-4 rounded-2xl shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl shrink-0">
-                    <i class="fa-solid fa-star"></i>
+
+            <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center space-x-4">
+                <div class="w-12 h-12 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl shrink-0">
+                    <i class="fa-solid fa-calculator"></i>
                 </div>
                 <div>
-                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Favorites</span>
-                    <h3 id="statFavorites" class="text-2xl font-bold">0</h3>
+                    <div class="text-2xl font-bold" id="statForms">0</div>
+                    <div class="text-xs text-slate-500 dark:text-slate-400">Forms & Tools</div>
                 </div>
             </div>
         </div>
 
-        <!-- Filters, Search & Categories -->
-        <div class="glass-card p-4 sm:p-5 rounded-2xl shadow-sm space-y-4">
+        <!-- Filter & Search Controls -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+            
+            <!-- Category Tabs -->
+            <div class="flex items-center space-x-1 overflow-x-auto pb-2 md:pb-0 scrollbar-none" id="categoryTabs">
+                <button onclick="filterCategory('all')" data-cat="all" class="cat-btn active px-4 py-2 text-sm font-medium rounded-xl transition-all whitespace-nowrap bg-indigo-600 text-white shadow-md shadow-indigo-500/20">
+                    All Tools
+                </button>
+                <button onclick="filterCategory('favorites')" data-cat="favorites" class="cat-btn px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl transition-all whitespace-nowrap">
+                    <i class="fa-solid fa-star text-amber-400 mr-1.5"></i> Favorites (<span id="favCount">0</span>)
+                </button>
+                <button onclick="filterCategory('trackers')" data-cat="trackers" class="cat-btn px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl transition-all whitespace-nowrap">
+                    Trackers
+                </button>
+                <button onclick="filterCategory('validations')" data-cat="validations" class="cat-btn px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl transition-all whitespace-nowrap">
+                    Validations & Ops
+                </button>
+                <button onclick="filterCategory('forms')" data-cat="forms" class="cat-btn px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl transition-all whitespace-nowrap">
+                    Forms & Calculators
+                </button>
+            </div>
+
             <!-- Search Bar -->
-            <div class="relative">
-                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                <input type="text" id="searchInput" oninput="filterTools()" placeholder="Search tools, trackers, forms, calculators or tags..." class="w-full pl-11 pr-10 py-3 bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700/80 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm transition placeholder-slate-400">
-                <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1">
+            <div class="relative w-full md:w-80">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Search tools, forms, reports..." class="w-full pl-10 pr-9 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-sm transition-all">
+                <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xs">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-
-            <!-- Tabs -->
-            <div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar text-xs sm:text-sm">
-                <button onclick="setCategory('all')" id="tab-all" class="category-tab px-4 py-2 rounded-xl font-medium transition whitespace-nowrap bg-sky-600 text-white shadow-md shadow-sky-600/20">
-                    <i class="fa-solid fa-border-all mr-1.5"></i> All Tools
-                </button>
-                <button onclick="setCategory('favorites')" id="tab-favorites" class="category-tab px-4 py-2 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap">
-                    <i class="fa-solid fa-star text-amber-500 mr-1.5"></i> Favorites
-                </button>
-                <button onclick="setCategory('Trackers')" id="tab-Trackers" class="category-tab px-4 py-2 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap">
-                    <i class="fa-solid fa-chart-pie text-emerald-500 mr-1.5"></i> Trackers
-                </button>
-                <button onclick="setCategory('Validations')" id="tab-Validations" class="category-tab px-4 py-2 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap">
-                    <i class="fa-solid fa-shield-halved text-purple-500 mr-1.5"></i> Validations & Ops
-                </button>
-                <button onclick="setCategory('Forms')" id="tab-Forms" class="category-tab px-4 py-2 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap">
-                    <i class="fa-solid fa-calculator text-sky-500 mr-1.5"></i> Forms & Calculators
-                </button>
-            </div>
         </div>
 
-        <!-- Tool Cards Grid -->
-        <div id="toolsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            <!-- Cards will be populated dynamically -->
+        <!-- Grid Container -->
+        <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <!-- Dynamic Cards Loaded via JS -->
         </div>
 
-        <!-- Empty State -->
-        <div id="emptyState" class="hidden text-center py-16 glass-card rounded-2xl">
-            <div class="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 flex items-center justify-center text-2xl mx-auto mb-3">
+        <!-- Empty Search State -->
+        <div id="emptyState" class="hidden text-center py-16">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 text-2xl">
                 <i class="fa-solid fa-folder-open"></i>
             </div>
-            <h3 class="text-base font-semibold text-slate-700 dark:text-slate-200">No matching tools found</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto mt-1">Try adjusting your search terms or filter selection.</p>
+            <h3 class="text-lg font-semibold text-slate-700 dark:text-slate-300">No matching tools found</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Try adjusting your search query or switching categories.</p>
+            <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-xl shadow-md hover:bg-indigo-700 transition">
+                Reset Filters
+            </button>
         </div>
+
     </main>
 
-    <!-- Embedded Quick Calculator Modal -->
-    <div id="quickCalcModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="glass-card bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto custom-scrollbar shadow-2xl p-6 relative">
-            
-            <button onclick="closeModal('quickCalcModal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 flex items-center justify-center transition">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-            <h2 class="text-xl font-bold flex items-center gap-2 mb-4">
-                <i class="fa-solid fa-calculator text-sky-500"></i> Operational Quick Calculators
-            </h2>
-
-            <div class="space-y-6">
-                <!-- OT Calculator Widget -->
-                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 space-y-3">
-                    <h3 class="font-semibold text-sm flex items-center justify-between">
-                        <span><i class="fa-solid fa-clock text-amber-500 mr-2"></i>OT Estimator (Sept Scheme)</span>
-                        <a href="https://spk2026.github.io/OT-Calculator/" target="_blank" class="text-xs text-sky-500 hover:underline">Full Tool <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>
-                    </h3>
-                    <div class="grid grid-cols-2 gap-3 text-xs">
-                        <div>
-                            <label class="block text-slate-500 dark:text-slate-400 mb-1">OT Hours Worked</label>
-                            <input type="number" id="otHours" oninput="calcOT()" value="4" class="w-full p-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-slate-500 dark:text-slate-400 mb-1">Hourly Rate (₹)</label>
-                            <input type="number" id="otRate" oninput="calcOT()" value="150" class="w-full p-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-                        </div>
-                    </div>
-                    <div class="pt-2 border-t border-slate-200 dark:border-slate-700 flex justify-between items-center text-sm font-semibold">
-                        <span>Est. OT Compensation:</span>
-                        <span id="otResult" class="text-emerald-600 dark:text-emerald-400 font-bold text-base">₹ 900.00</span>
-                    </div>
-                    <p class="text-[11px] text-slate-400">Calculated at 1.5x standard hourly multiplier.</p>
-                </div>
-
-                <!-- RL Penalty Quick Calc Widget -->
-                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 space-y-3">
-                    <h3 class="font-semibold text-sm flex items-center justify-between">
-                        <span><i class="fa-solid fa-triangle-exclamation text-rose-500 mr-2"></i>RL Penalty Calculator</span>
-                        <a href="https://spk2026.github.io/RL-penalty-calculator/" target="_blank" class="text-xs text-sky-500 hover:underline">Full Tool <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>
-                    </h3>
-                    <div class="space-y-3 text-xs">
-                        <div>
-                            <label class="block text-slate-500 dark:text-slate-400 mb-1">Unplanned Absence Count (This Month)</label>
-                            <select id="rlOccurrences" onchange="calcRL()" class="w-full p-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg outline-none">
-                                <option value="0">0 Absences (0% Penalty)</option>
-                                <option value="1">1 Absence (Warning / 10% Incentive Loss)</option>
-                                <option value="2">2 Absences (25% Incentive Loss)</option>
-                                <option value="3">3+ Absences (50% - 100% Incentive Loss)</option>
-                            </select>
-                        </div>
-                        <div class="p-3 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800">
-                            <div class="text-xs text-slate-500">Impact Assessment:</div>
-                            <div id="rlImpact" class="font-medium text-emerald-600 dark:text-emerald-400 mt-0.5">Compliant - Full Incentive Eligible</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
+        <p>FL Chat Supervisor Portal • Built for Team Operations</p>
+    </footer>
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 text-sm font-medium border border-slate-700 dark:border-slate-200">
-        <i class="fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600 text-base"></i>
-        <span id="toastMessage">Link copied to clipboard!</span>
+    <div id="toast" class="fixed bottom-6 right-6 translate-y-16 opacity-0 transition-all duration-300 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3 z-50 pointer-events-none">
+        <i class="fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600 text-lg"></i>
+        <span id="toastMsg" class="text-sm font-medium">Link copied to clipboard!</span>
     </div>
 
+    <!-- JavaScript Application Code -->
     <script>
-        // Data Structure Parsed from Supervisor Excel Sheet
-        const toolsData = [
+        // Resource Data Extracted from Excel File
+        const resources = [
             // TRACKERS
             {
-                id: "1",
+                id: "tr-1",
                 title: "Survey Analysis Tracker",
-                category: "Trackers",
-                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u124662_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7B8e4a77aa-971d-446c-b105-b23690c0d0fe%7D&action=edit&wdprevioussession=196a5320-f156-0226-c5f3-74d6ba9fa6f5&wdenableroaming=1&wdodb=1&wdlcid=en-US&wdorigin=Other&wdredirectionreason=Force_SingleStepBoot&wdinitialsession=6e970d67-51a3-3f00-de6d-2cd1571831f9&wdrldsc=2&wdrldc=1&wdrldr=ContinueInExcel",
-                icon: "fa-chart-column",
-                iconColor: "text-blue-500 bg-blue-500/10",
-                tags: ["SharePoint", "Excel", "Survey"],
-                desc: "Live CSAT/DSAT survey analysis & feedback logs."
+                category: "trackers",
+                badge: "Analytics",
+                icon: "fa-chart-pie",
+                iconColor: "text-blue-500 bg-blue-50 dark:bg-blue-950/50",
+                description: "Analysis of customer surveys and performance feedback metrics.",
+                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u124662_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7B8e4a77aa-971d-446c-b105-b23690c0d0fe%7D&action=edit&wdprevioussession=196a5320-f156-0226-c5f3-74d6ba9fa6f5&wdenableroaming=1&wdodb=1&wdlcid=en-US&wdorigin=Other&wdredirectionreason=Force_SingleStepBoot&wdinitialsession=6e970d67-51a3-3f00-de6d-2cd1571831f9&wdrldsc=2&wdrldc=1&wdrldr=ContinueInExcel"
             },
             {
-                id: "2",
+                id: "tr-2",
                 title: "Monthly DAP - TGT/RL",
-                category: "Trackers",
-                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u433597_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7BAD5FF90F-529F-40C7-8A85-F8976EB57CD6%7D&file=InfoSec%20Training%20Report%20as%20of%2030.09.25%20(ETI).xlsb&action=default&mobileredirect=true&DefaultItemOpen=1",
+                category: "trackers",
+                badge: "Monthly DAP",
                 icon: "fa-calendar-days",
-                iconColor: "text-amber-500 bg-amber-500/10",
-                tags: ["Monthly DAP", "TGT", "InfoSec"],
-                desc: "InfoSec and monthly DAP compliance reporting."
+                iconColor: "text-indigo-500 bg-indigo-50 dark:bg-indigo-950/50",
+                description: "Monthly Development Action Plan tracking for TGT and RL teams.",
+                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u433597_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7BAD5FF90F-529F-40C7-8A85-F8976EB57CD6%7D&file=InfoSec%20Training%20Report%20as%20of%2030.09.25%20(ETI).xlsb&action=default&mobileredirect=true&DefaultItemOpen=1"
             },
             {
-                id: "3",
+                id: "tr-3",
                 title: "TGT Feedback checks (Read only)",
-                category: "Trackers",
-                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u124662_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7BADAD180D-A977-4AEE-B9FF-121D2F887B4C%7D&file=Support%20Placement%20-%20Analysis%20-%20FL%20Chat.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1",
+                category: "trackers",
+                badge: "Read Only",
                 icon: "fa-clipboard-check",
-                iconColor: "text-purple-500 bg-purple-500/10",
-                tags: ["Read Only", "Feedback", "TGT"],
-                desc: "Audited feedback and quality audit history."
+                iconColor: "text-purple-500 bg-purple-50 dark:bg-purple-950/50",
+                description: "Quality and feedback review records for TGT support placement.",
+                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u124662_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7BADAD180D-A977-4AEE-B9FF-121D2F887B4C%7D&file=Support%20Placement%20-%20Analysis%20-%20FL%20Chat.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1"
             },
             {
-                id: "4",
+                id: "tr-4",
                 title: "15 Mins report (Read only)",
-                category: "Trackers",
-                url: "https://wnsgs.sharepoint.com/:x:/r/sites/EtraveliFamily/_layouts/15/Doc.aspx?sourcedoc=%7B9F5CA254-DD07-4E59-81F8-FA131259DF25%7D&file=ID%20status%20-%20Etraveli.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1",
+                category: "trackers",
+                badge: "Realtime",
                 icon: "fa-stopwatch",
-                iconColor: "text-rose-500 bg-rose-500/10",
-                tags: ["Read Only", "Realtime", "Etraveli"],
-                desc: "Quarter-hourly queue & headcount status monitor."
+                iconColor: "text-amber-500 bg-amber-50 dark:bg-amber-950/50",
+                description: "Real-time 15-minute operational monitoring report and ID status.",
+                url: "https://wnsgs.sharepoint.com/:x:/r/sites/EtraveliFamily/_layouts/15/Doc.aspx?sourcedoc=%7B9F5CA254-DD07-4E59-81F8-FA131259DF25%7D&file=ID%20status%20-%20Etraveli.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1"
             },
             {
-                id: "5",
+                id: "tr-5",
                 title: "HR Connect tracker",
-                category: "Trackers",
-                url: "https://forms.office.com/r/rtwvD7j76x",
+                category: "trackers",
+                badge: "HR Ops",
                 icon: "fa-users-gear",
-                iconColor: "text-cyan-500 bg-cyan-500/10",
-                tags: ["HR", "Form", "Connect"],
-                desc: "HR queries, escalations, and grievance tracking."
+                iconColor: "text-rose-500 bg-rose-50 dark:bg-rose-950/50",
+                description: "Track HR requests, escalations, and agent connect logs.",
+                url: "https://forms.office.com/r/rtwvD7j76x"
             },
             {
-                id: "6",
+                id: "tr-6",
                 title: "WNS Mandatory trainings",
-                category: "Trackers",
-                url: "https://forms.office.com/r/zdY7HMQgHa",
+                category: "trackers",
+                badge: "Compliance",
                 icon: "fa-graduation-cap",
-                iconColor: "text-emerald-500 bg-emerald-500/10",
-                tags: ["Training", "Compliance", "Form"],
-                desc: "Mandatory compliance module submission tracker."
+                iconColor: "text-emerald-500 bg-emerald-50 dark:bg-emerald-950/50",
+                description: "Compliance tracking for all mandatory WNS training modules.",
+                url: "https://forms.office.com/r/zdY7HMQgHa"
             },
             {
-                id: "7",
+                id: "tr-7",
                 title: "Client ID statuses",
-                category: "Trackers",
-                url: "https://wnsgs.sharepoint.com/:x:/r/sites/EtraveliFamily/_layouts/15/Doc.aspx?sourcedoc=%7B9F5CA254-DD07-4E59-81F8-FA131259DF25%7D&file=ID%20status%20-%20Etraveli.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1",
+                category: "trackers",
+                badge: "Client IDs",
                 icon: "fa-id-card",
-                iconColor: "text-indigo-500 bg-indigo-500/10",
-                tags: ["Client ID", "Etraveli", "Access"],
-                desc: "Client system ID creation & active status roster."
+                iconColor: "text-cyan-500 bg-cyan-50 dark:bg-cyan-950/50",
+                description: "Etraveli Client ID status overview and access management tracker.",
+                url: "https://wnsgs.sharepoint.com/:x:/r/sites/EtraveliFamily/_layouts/15/Doc.aspx?sourcedoc=%7B9F5CA254-DD07-4E59-81F8-FA131259DF25%7D&file=ID%20status%20-%20Etraveli.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1"
             },
 
             // VALIDATIONS & OPERATIONS
             {
-                id: "8",
+                id: "val-1",
                 title: "Transfers Validation",
-                category: "Validations",
-                url: "https://forms.office.com/r/YxaG4st5Zr",
+                category: "validations",
+                badge: "Validation",
                 icon: "fa-right-left",
-                iconColor: "text-blue-500 bg-blue-500/10",
-                tags: ["Transfers", "Validation", "MS Form"],
-                desc: "Validate chat and ticket transfers compliance."
+                iconColor: "text-indigo-500 bg-indigo-50 dark:bg-indigo-950/50",
+                description: "Submit and validate agent transfer records and chat handoffs.",
+                url: "https://forms.office.com/r/YxaG4st5Zr"
             },
             {
-                id: "9",
+                id: "val-2",
                 title: "Support Validation",
-                category: "Validations",
-                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u124662_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7BADAD180D-A977-4AEE-B9FF-121D2F887B4C%7D&file=Support%20Placement%20-%20Analysis%20-%20FL%20Chat.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1",
+                category: "validations",
+                badge: "Placement",
                 icon: "fa-circle-check",
-                iconColor: "text-emerald-500 bg-emerald-500/10",
-                tags: ["Support", "FL Chat", "Analysis"],
-                desc: "Support placement and roster allocation validation."
+                iconColor: "text-emerald-500 bg-emerald-50 dark:bg-emerald-950/50",
+                description: "FL Chat support placement analysis and operational verification.",
+                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u124662_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7BADAD180D-A977-4AEE-B9FF-121D2F887B4C%7D&file=Support%20Placement%20-%20Analysis%20-%20FL%20Chat.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1"
             },
             {
-                id: "10",
+                id: "val-3",
                 title: "WC2 View entries",
-                category: "Validations",
-                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u124662_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7B68812298-93D5-4707-831B-5A673A3EF551%7D&file=WC2%20Implementation%20form%20_To%20be%20filled%20on%20chat_call%20itself..xlsx&action=edit&mobileredirect=true&wdMsFormsCorrelationId=3c5af38c-8513-4a65-a1c4-43be5ebe29e1",
-                icon: "fa-file-invoice",
-                iconColor: "text-violet-500 bg-violet-500/10",
-                tags: ["WC2", "Implementation", "Live Chat"],
-                desc: "WC2 live call/chat implementation entries view."
+                category: "validations",
+                badge: "Chat / Call",
+                icon: "fa-file-lines",
+                iconColor: "text-teal-500 bg-teal-50 dark:bg-teal-950/50",
+                description: "WC2 Implementation entries submitted during active chat/calls.",
+                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u124662_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7B68812298-93D5-4707-831B-5A673A3EF551%7D&file=WC2%20Implementation%20form%20_To%20be%20filled%20on%20chat_call%20itself..xlsx&action=edit&mobileredirect=true&wdMsFormsCorrelationId=3c5af38c-8513-4a65-a1c4-43be5ebe29e1"
             },
             {
-                id: "11",
+                id: "val-4",
                 title: "DSAT Calibration tracker",
-                category: "Validations",
-                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u124662_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7B0E8FBEBE-6313-4554-B071-7E356C12ACAA%7D&file=DSAT%20Calibrations%20Tracker.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1&wdwpf=t",
+                category: "validations",
+                badge: "Quality",
                 icon: "fa-sliders",
-                iconColor: "text-amber-500 bg-amber-500/10",
-                tags: ["DSAT", "Calibration", "Quality"],
-                desc: "DSAT case calibrations & quality alignment logger."
+                iconColor: "text-amber-500 bg-amber-50 dark:bg-amber-950/50",
+                description: "Log and audit DSAT calibration sessions across supervisors.",
+                url: "https://wnsgs-my.sharepoint.com/:x:/r/personal/u124662_wns_com/_layouts/15/Doc.aspx?sourcedoc=%7B0E8FBEBE-6313-4554-B071-7E356C12ACAA%7D&file=DSAT%20Calibrations%20Tracker.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1&wdwpf=t"
             },
 
             // FORMS & CALCULATORS
             {
-                id: "12",
+                id: "frm-1",
                 title: "Coaching Form",
-                category: "Forms",
-                url: "https://forms.office.com/r/rtwvD7j76x",
+                category: "forms",
+                badge: "Form",
                 icon: "fa-bullseye",
-                iconColor: "text-rose-500 bg-rose-500/10",
-                tags: ["Coaching", "1-on-1", "Form"],
-                desc: "Submit agent 1-on-1 coaching sessions and action plans."
+                iconColor: "text-rose-500 bg-rose-50 dark:bg-rose-950/50",
+                description: "Official form to document 1-on-1 coaching sessions and action items.",
+                url: "https://forms.office.com/r/rtwvD7j76x"
             },
             {
-                id: "13",
+                id: "frm-2",
                 title: "TGT/FL Feedback form",
-                category: "Forms",
-                url: "https://forms.office.com/r/YxaG4st5Zr",
+                category: "forms",
+                badge: "Feedback",
                 icon: "fa-comments",
-                iconColor: "text-sky-500 bg-sky-500/10",
-                tags: ["Feedback", "TGT", "FL"],
-                desc: "Provide operational feedback for floor support."
+                iconColor: "text-sky-500 bg-sky-50 dark:bg-sky-950/50",
+                description: "Submit quality and operational feedback for TGT and Floor Support.",
+                url: "https://forms.office.com/r/YxaG4st5Zr"
             },
             {
-                id: "14",
+                id: "frm-3",
                 title: "Client ID Deletion / retention form",
-                category: "Forms",
-                url: "https://forms.cloud.microsoft/pages/responsepage.aspx?id=--z4I5BqwkaWyko2JyG4LCMEzK2PWS5Nkrdk5Lu5I2VUQjJRNjlIS0ZCUk5RTDNQN1dQNjlVRkY2Ry4u&route=shorturl",
+                category: "forms",
+                badge: "ID Mgmt",
                 icon: "fa-user-slash",
-                iconColor: "text-red-500 bg-red-500/10",
-                tags: ["Client ID", "Deletion", "Offboarding"],
-                desc: "Request client credential deletion or retention extension."
+                iconColor: "text-red-500 bg-red-50 dark:bg-red-950/50",
+                description: "Request client ID deletion or retention approval for team members.",
+                url: "https://forms.cloud.microsoft/pages/responsepage.aspx?id=--z4I5BqwkaWyko2JyG4LCMEzK2PWS5Nkrdk5Lu5I2VUQjJRNjlIS0ZCUk5RTDNQN1dQNjlVRkY2Ry4u&route=shorturl"
             },
             {
-                id: "15",
+                id: "frm-4",
                 title: "Attendance Correction form",
-                category: "Forms",
-                url: "https://forms.office.com/r/zdY7HMQgHa",
-                icon: "fa-user-clock",
-                iconColor: "text-indigo-500 bg-indigo-500/10",
-                tags: ["Attendance", "Correction", "Roster"],
-                desc: "Submit regularization requests for shift punch timings."
+                category: "forms",
+                badge: "Attendance",
+                icon: "fa-clock",
+                iconColor: "text-violet-500 bg-violet-50 dark:bg-violet-950/50",
+                description: "Form to log shift attendance corrections and swipe exceptions.",
+                url: "https://forms.office.com/r/zdY7HMQgHa"
             },
             {
-                id: "16",
+                id: "frm-5",
                 title: "Realtime Validation tracker",
-                category: "Forms",
-                url: "https://forms.cloud.microsoft/pages/responsepage.aspx?id=--z4I5BqwkaWyko2JyG4LCJePT65qNVGkW_cR9wuNrNURTFQNERTWFJGTktLM003UEFVSExKSVhGUy4u&route=shorturl",
+                category: "forms",
+                badge: "Realtime",
                 icon: "fa-bolt",
-                iconColor: "text-amber-500 bg-amber-500/10",
-                tags: ["Realtime", "Validation", "Live Ops"],
-                desc: "Log real-time validation audits during shift."
+                iconColor: "text-yellow-500 bg-yellow-50 dark:bg-yellow-950/50",
+                description: "Real-time floor validation and operational monitoring form.",
+                url: "https://forms.cloud.microsoft/pages/responsepage.aspx?id=--z4I5BqwkaWyko2JyG4LCJePT65qNVGkW_cR9wuNrNURTFQNERTWFJGTktLM003UEFVSExKSVhGUy4u&route=shorturl"
             },
             {
-                id: "17",
+                id: "frm-6",
                 title: "OT Calculator (Sept Scheme)",
-                category: "Forms",
-                url: "https://spk2026.github.io/OT-Calculator/",
+                category: "forms",
+                badge: "Web Tool",
                 icon: "fa-calculator",
-                iconColor: "text-emerald-500 bg-emerald-500/10",
-                tags: ["Calculator", "Overtime", "Pay Scheme"],
-                desc: "Official overtime pay calculator tool."
+                iconColor: "text-emerald-500 bg-emerald-50 dark:bg-emerald-950/50",
+                description: "Interactive Overtime calculation tool using the September scheme rules.",
+                url: "https://spk2026.github.io/OT-Calculator/"
             },
             {
-                id: "18",
+                id: "frm-7",
                 title: "RL Penalty Calculator",
-                category: "Forms",
-                url: "https://spk2026.github.io/RL-penalty-calculator/",
+                category: "forms",
+                badge: "Web Tool",
                 icon: "fa-triangle-exclamation",
-                iconColor: "text-orange-500 bg-orange-500/10",
-                tags: ["Calculator", "RL Penalty", "Absence"],
-                desc: "Calculate reliability penalty and incentive impact."
+                iconColor: "text-amber-500 bg-amber-50 dark:bg-amber-950/50",
+                description: "Calculate rostered leave penalties and allowance adjustments.",
+                url: "https://spk2026.github.io/RL-penalty-calculator/"
             },
             {
-                id: "19",
+                id: "frm-8",
                 title: "One On One Template",
-                category: "Forms",
-                url: "https://spk2026.github.io/One-on-one-template-/",
-                icon: "fa-users-line",
-                iconColor: "text-teal-500 bg-teal-500/10",
-                tags: ["Template", "1-on-1", "Supervisor"],
-                desc: "Standard template generator for team 1-on-1 chats."
+                category: "forms",
+                badge: "Template",
+                icon: "fa-handshake",
+                iconColor: "text-blue-500 bg-blue-50 dark:bg-blue-950/50",
+                description: "Standardized 1-on-1 performance review template web application.",
+                url: "https://spk2026.github.io/One-on-one-template-/"
             }
         ];
 
-        // State variables
+        // Global State
         let currentCategory = 'all';
         let searchQuery = '';
         let favorites = JSON.parse(localStorage.getItem('fl_favs') || '[]');
 
-        // Theme Toggler
-        function initTheme() {
-            if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
-                document.documentElement.classList.remove('dark');
-                document.getElementById('themeIcon').className = 'fa-solid fa-sun text-amber-500';
-            } else {
-                document.documentElement.classList.add('dark');
-                document.getElementById('themeIcon').className = 'fa-solid fa-moon text-sky-400';
-            }
+        // Initialize Theme from localStorage or system preference
+        if (localStorage.getItem('theme') === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            document.documentElement.classList.remove('dark');
+            updateThemeIcon(false);
+        } else {
+            document.documentElement.classList.add('dark');
+            updateThemeIcon(true);
         }
 
         function toggleTheme() {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.theme = 'light';
-                document.getElementById('themeIcon').className = 'fa-solid fa-sun text-amber-500';
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.theme = 'dark';
-                document.getElementById('themeIcon').className = 'fa-solid fa-moon text-sky-400';
-            }
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateThemeIcon(isDark);
         }
 
-        // Toggle Favorites
-        function toggleFavorite(id, event) {
-            event.stopPropagation();
+        function updateThemeIcon(isDark) {
+            const icon = document.getElementById('themeIcon');
+            icon.className = isDark ? 'fa-solid fa-sun text-amber-400 text-lg' : 'fa-solid fa-moon text-slate-700 text-lg';
+        }
+
+        // Favorites Handling
+        function toggleFavorite(id, e) {
+            e.stopPropagation();
             if (favorites.includes(id)) {
-                favorites = favorites.filter(favId => favId !== id);
+                favorites = favorites.filter(fav => fav !== id);
             } else {
                 favorites.push(id);
             }
             localStorage.setItem('fl_favs', JSON.stringify(favorites));
             updateStats();
-            renderTools();
+            renderCards();
         }
 
-        // Copy Link Functionality
-        function copyLink(url, event) {
-            event.stopPropagation();
-            
-            // Clipboard copy fallbacks
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(url);
-            } else {
-                const textArea = document.createElement('textarea');
-                textArea.value = url;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-            }
-
-            showToast('Direct tool link copied to clipboard!');
+        // Stats Counter Calculation
+        function updateStats() {
+            document.getElementById('statTotal').innerText = resources.length;
+            document.getElementById('statTrackers').innerText = resources.filter(r => r.category === 'trackers').length;
+            document.getElementById('statValidations').innerText = resources.filter(r => r.category === 'validations').length;
+            document.getElementById('statForms').innerText = resources.filter(r => r.category === 'forms').length;
+            document.getElementById('favCount').innerText = favorites.length;
         }
 
-        // Show Toast
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastMessage').innerText = msg;
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
-            
-            setTimeout(() => {
-                toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
-        }
-
-        // Filter & Search
-        function setCategory(cat) {
+        // Search & Filter Handlers
+        function filterCategory(cat) {
             currentCategory = cat;
-            document.querySelectorAll('.category-tab').forEach(tab => {
-                tab.className = "category-tab px-4 py-2 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap";
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.getAttribute('data-cat') === cat) {
+                    btn.className = "cat-btn active px-4 py-2 text-sm font-medium rounded-xl transition-all whitespace-nowrap bg-indigo-600 text-white shadow-md shadow-indigo-500/20";
+                } else {
+                    btn.className = "cat-btn px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-xl transition-all whitespace-nowrap";
+                }
             });
-
-            const activeTab = document.getElementById(`tab-${cat}`);
-            if (activeTab) {
-                activeTab.className = "category-tab px-4 py-2 rounded-xl font-medium transition whitespace-nowrap bg-sky-600 text-white shadow-md shadow-sky-600/20";
-            }
-            renderTools();
+            renderCards();
         }
 
-        function filterTools() {
+        function handleSearch() {
             const input = document.getElementById('searchInput');
-            searchQuery = input.value.toLowerCase().trim();
+            searchQuery = input.value.trim().toLowerCase();
             document.getElementById('clearSearchBtn').classList.toggle('hidden', searchQuery === '');
-            renderTools();
+            renderCards();
         }
 
         function clearSearch() {
             document.getElementById('searchInput').value = '';
-            filterTools();
+            searchQuery = '';
+            document.getElementById('clearSearchBtn').classList.add('hidden');
+            renderCards();
         }
 
-        // Update Counter Stats
-        function updateStats() {
-            document.getElementById('statTotal').innerText = toolsData.length;
-            document.getElementById('statTrackers').innerText = toolsData.filter(t => t.category === 'Trackers').length;
-            document.getElementById('statValidations').innerText = toolsData.filter(t => t.category === 'Validations').length;
-            document.getElementById('statFavorites').innerText = favorites.length;
+        function resetFilters() {
+            clearSearch();
+            filterCategory('all');
         }
 
-        // Render Tool Cards
-        function renderTools() {
-            const grid = document.getElementById('toolsGrid');
+        // Copy Link Action
+        function copyLink(url, e) {
+            e.stopPropagation();
+            navigator.clipboard.writeText(url).then(() => {
+                showToast("Link copied to clipboard!");
+            }).catch(err => {
+                showToast("Failed to copy link");
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-y-16', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-16', 'opacity-0');
+            }, 2500);
+        }
+
+        // Render Cards Grid
+        function renderCards() {
+            const grid = document.getElementById('cardsGrid');
             const emptyState = document.getElementById('emptyState');
+            
+            const filtered = resources.filter(item => {
+                const matchesCat = currentCategory === 'all' 
+                    || (currentCategory === 'favorites' && favorites.includes(item.id))
+                    || item.category === currentCategory;
+                
+                const matchesSearch = searchQuery === '' 
+                    || item.title.toLowerCase().includes(searchQuery)
+                    || item.badge.toLowerCase().includes(searchQuery)
+                    || item.description.toLowerCase().includes(searchQuery);
 
-            const filtered = toolsData.filter(tool => {
-                const matchesCategory = 
-                    currentCategory === 'all' ? true :
-                    currentCategory === 'favorites' ? favorites.includes(tool.id) :
-                    tool.category === currentCategory;
-
-                const matchesSearch = 
-                    tool.title.toLowerCase().includes(searchQuery) ||
-                    tool.desc.toLowerCase().includes(searchQuery) ||
-                    tool.tags.some(tag => tag.toLowerCase().includes(searchQuery));
-
-                return matchesCategory && matchesSearch;
+                return matchesCat && matchesSearch;
             });
 
             if (filtered.length === 0) {
@@ -594,99 +529,56 @@
             }
 
             emptyState.classList.add('hidden');
-            grid.innerHTML = filtered.map(tool => {
-                const isFav = favorites.includes(tool.id);
+
+            grid.innerHTML = filtered.map(item => {
+                const isFav = favorites.includes(item.id);
                 return `
-                    <div class="glass-card rounded-2xl p-5 hover:shadow-lg transition-all duration-300 flex flex-col justify-between group border border-slate-200/80 dark:border-slate-800">
-                        <div>
-                            <!-- Top row: Icon & Actions -->
-                            <div class="flex items-start justify-between gap-3 mb-3">
-                                <div class="w-12 h-12 rounded-xl ${tool.iconColor} flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform">
-                                    <i class="fa-solid ${tool.icon}"></i>
-                                </div>
-                                <div class="flex items-center gap-1">
-                                    <button onclick="copyLink('${tool.url}', event)" title="Copy Link" class="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center justify-center">
-                                        <i class="fa-regular fa-copy"></i>
-                                    </button>
-                                    <button onclick="toggleFavorite('${tool.id}', event)" title="${isFav ? 'Remove Favorite' : 'Add Favorite'}" class="w-8 h-8 rounded-lg transition flex items-center justify-center ${isFav ? 'text-amber-500 bg-amber-500/10' : 'text-slate-400 hover:text-amber-500 hover:bg-slate-100 dark:hover:bg-slate-800'}">
-                                        <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-star"></i>
-                                    </button>
-                                </div>
+                <div class="group relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 hover:shadow-xl hover:border-indigo-300 dark:hover:border-indigo-500/50 transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <!-- Header / Icon / Category -->
+                        <div class="flex items-start justify-between gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-xl ${item.iconColor} flex items-center justify-center text-xl shrink-0 shadow-sm">
+                                <i class="fa-solid ${item.icon}"></i>
                             </div>
-
-                            <!-- Title & Desc -->
-                            <h3 class="font-bold text-base text-slate-800 dark:text-slate-100 mb-1 group-hover:text-sky-500 transition-colors">
-                                ${tool.title}
-                            </h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">
-                                ${tool.desc}
-                            </p>
+                            <div class="flex items-center space-x-1.5">
+                                <span class="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 uppercase tracking-wider">
+                                    ${item.badge}
+                                </span>
+                                <button onclick="toggleFavorite('${item.id}', event)" class="p-1.5 rounded-lg text-slate-300 dark:text-slate-600 hover:text-amber-400 dark:hover:text-amber-400 transition" title="Bookmark tool">
+                                    <i class="${isFav ? 'fa-solid text-amber-400' : 'fa-regular'} fa-star text-lg"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <div>
-                            <!-- Tags -->
-                            <div class="flex flex-wrap gap-1.5 mb-4">
-                                ${tool.tags.map(tag => `
-                                    <span class="px-2 py-0.5 text-[10px] font-medium rounded-md bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300">
-                                        ${tag}
-                                    </span>
-                                `).join('')}
-                            </div>
-
-                            <!-- Open Action -->
-                            <a href="${tool.url}" target="_blank" class="w-full py-2.5 px-4 rounded-xl bg-slate-900 text-white dark:bg-sky-600 dark:hover:bg-sky-500 hover:bg-slate-800 font-medium text-xs flex items-center justify-center gap-2 transition shadow-sm">
-                                <span>Open Resource</span>
-                                <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
-                            </a>
-                        </div>
+                        <!-- Title & Description -->
+                        <h3 class="text-base font-bold text-slate-800 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-1 mb-1">
+                            ${item.title}
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed mb-6">
+                            ${item.description}
+                        </p>
                     </div>
+
+                    <!-- Footer Actions -->
+                    <div class="pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2">
+                        <button onclick="copyLink('${item.url}', event)" class="px-3 py-2 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center space-x-1.5">
+                            <i class="fa-regular fa-copy"></i>
+                            <span>Copy Link</span>
+                        </button>
+
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 shadow-md shadow-indigo-500/10 hover:shadow-indigo-500/25 transition-all flex items-center space-x-1.5">
+                            <span>Open</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
                 `;
             }).join('');
         }
 
-        // Modal Controls
-        function openModal(id) {
-            document.getElementById(id).classList.remove('hidden');
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).classList.add('hidden');
-        }
-
-        // Embedded OT Quick Calculator Logic
-        function calcOT() {
-            const hours = parseFloat(document.getElementById('otHours').value) || 0;
-            const rate = parseFloat(document.getElementById('otRate').value) || 0;
-            const total = hours * rate * 1.5;
-            document.getElementById('otResult').innerText = `₹ ${total.toFixed(2)}`;
-        }
-
-        // Embedded RL Penalty Quick Calc Logic
-        function calcRL() {
-            const val = document.getElementById('rlOccurrences').value;
-            const impactEl = document.getElementById('rlImpact');
-            
-            if (val === "0") {
-                impactEl.innerText = "Compliant - Full Incentive Eligible";
-                impactEl.className = "font-medium text-emerald-600 dark:text-emerald-400 mt-0.5";
-            } else if (val === "1") {
-                impactEl.innerText = "Minor Warning - 10% Incentive Deducted";
-                impactEl.className = "font-medium text-amber-600 dark:text-amber-400 mt-0.5";
-            } else if (val === "2") {
-                impactEl.innerText = "Moderate Penalty - 25% Incentive Deducted";
-                impactEl.className = "font-medium text-orange-600 dark:text-orange-400 mt-0.5";
-            } else {
-                impactEl.innerText = "Severe Non-Compliance - 50% to 100% Incentive Loss";
-                impactEl.className = "font-medium text-rose-600 dark:text-rose-400 mt-0.5";
-            }
-        }
-
-        // Initial Initialization
-        window.onload = function() {
-            initTheme();
-            updateStats();
-            renderTools();
-        };
+        // Initial Load
+        updateStats();
+        renderCards();
     </script>
 </body>
 </html>
